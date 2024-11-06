@@ -1,0 +1,49 @@
+#include <stdio.h>
+#include <string.h>
+
+void caesarCipher(char *text, int shift) {
+    char result[strlen(text) + 1]; // +1 for the null terminator
+    int i;
+
+    for (i = 0; text[i] != '\0'; i++) {
+        char ch = text[i];
+
+  
+        if (ch >= 'A' && ch <= 'Z') {
+            result[i] = (ch - 'A' + shift) % 26 + 'A';
+        }
+        // Encrypt lowercase letters
+        else if (ch >= 'a' && ch <= 'z') {
+            result[i] = (ch - 'a' + shift) % 26 + 'a';
+        }
+       
+        else {
+            result[i] = ch;
+        }
+    }
+    result[i] = '\0'; // Null-terminate the result string
+    printf("Encrypted Text: %s\n", result);
+}
+
+int main() {
+    char text[100];
+    int shift;
+
+    printf("Enter the text to encrypt: ");
+    fgets(text, sizeof(text), stdin);
+    // Remove newline character from fgets
+    text[strcspn(text, "\n")] = 0;
+
+    printf("Enter shift value (1-25): ");
+    scanf("%d", &shift);
+
+
+    if (shift < 1 || shift > 25) {
+        printf("Shift value must be between 1 and 25.\n");
+        return 1;
+    }
+
+    caesarCipher(text, shift);
+
+    return 0;
+}
